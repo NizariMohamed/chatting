@@ -14,13 +14,13 @@ const multer = require('multer');
 // Config (env or defaults)
 // =====================
 const PORT = process.env.PORT || 4000;
-const JWT_SECRET = process.env.JWT_SECRET || 'nizari2412@@';
+const JWT_SECRET = process.env.JWT_SECRET;
 const UPLOAD_DIR = path.join(__dirname, 'uploads');
 
-const DB_HOST = process.env.DB_HOST || 'localhost';
-const DB_USER = process.env.DB_USER || 'root';
-const DB_PASS = process.env.DB_PASS || '1234';
-const DB_NAME = process.env.DB_NAME || 'nchat_db';
+const DB_HOST = process.env.DB_HOST;
+const DB_USER = process.env.DB_USER;
+const DB_PASS = process.env.DB_PASS;
+const DB_NAME = process.env.DB_NAME;
 
 // =====================
 // MySQL: pool + init
