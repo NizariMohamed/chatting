@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-dYzl4C8G9Nus8nORdzdrIW6DCeA44y7Nys8lm2SleqU9jwELyhl725LLJoPLD114F8CbnMD4PlzyBbs6j8ZZwQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"/>
+  <script src="https://unpkg.com/i18next@latest/i18next.min.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/selects.css">
+  <title>nChat</title>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div>
+        <div class="logo">
+          <img src="logo.png" alt="nChat Logo" />
+          <span>nChat</span>
+        </div>
+      </div>
+
+      <h2 style="margin-bottom: 0;" data-i18n="contacts">Contacts</h2>
+      <div class="search" style="margin-top: none;">
+        <input id="contact-search" placeholder="Search contacts" data-i18n="search_contacts" />
+      </div>
+      <ul id="contacts" class="contact-list"></ul>
+
+      <div class="me">
+        <div class="avatar" id="side-img"></div>
+        <div class="me-info">
+          <div class="me-name" id="me-name">User</div>
+          <div class="me-email" id="me-email">user@example.com</div>
+        </div>
+        <button id="logout" class="logout" data-i18n="logout">
+          <img src="log-out_10024145-removebg-preview.png" alt="">
+        </button>
+      </div>
+    </aside>
+
+    <main class="chat">
+      <header class="chat-header">
+        <div class="chat-peer">
+          <div class="avatar small" id="peer-avatar"></div>
+          <div>
+            <div class="peer-name" id="peer-name" data-i18n="select_contact">Select a contact</div>
+            <div class="peer-status" id="peer-status">—</div>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <!-- Profile Dropdown -->
+          <div class="dropdown" id="profile-dropdown">
+            <button class="dropdown-toggle" title="Profile">👤</button>
+            <div class="dropdown-menu">
+              <div class="dropdown-title" data-i18n="my_profile">My Profile</div>
+              <div class="profile-row">
+                <img id="me-avatar" src="" alt="User Avatar" class="avatar-image" />
+              </div>
+              <div class="profile-row">
+                <label data-i18n="username">Username</label>
+                <input id="profile-username" />
+              </div>
+              <div class="profile-row">
+                <label data-i18n="email">Email</label>
+                <input id="profile-email" />
+              </div>
+              <div class="profile-row">
+                <label data-i18n="avatar">Avatar</label>
+                <input type="file" id="avatar-input" accept="image/*" />
+              </div>
+              <button id="update-profile-btn" data-i18n="update_profile">Update Profile</button>
+              <p class="muted" data-i18n="avatar_note">(Avatar upload not implemented in this demo)</p>
+            </div>
+          </div>
+
+          <!-- Settings Dropdown -->
+          <div class="dropdown" id="settings-dropdown">
+            <button class="dropdown-toggle" title="Settings">⚙️</button>
+            <div class="dropdown-menu">
+              <div class="dropdown-title" id="settings-title" data-i18n="settings">Settings</div>
+
+              <div class="settings-row">
+                <span id="notifications-label" data-i18n="desktop_notifications">Desktop Notifications</span>
+                <label class="switch">
+                  <input type="checkbox" id="notifications-toggle">
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="settings-row">
+                <span id="status-label" data-i18n="show_online_status">Show Online Status</span>
+                <label class="switch">
+                  <input type="checkbox" id="status-toggle" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="settings-row">
+                <span id="sounds-label" data-i18n="message_sounds">Message Sounds</span>
+                <label class="switch">
+                  <input type="checkbox" id="sounds-toggle">
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="settings-row">
+                <span id="language-label" data-i18n="language">Language</span>
+                <select id="language-toggle">
+                  <option value="en">English</option>
+                  <option value="sw">Swahili</option>
+                </select>
+              </div>
+
+              <!-- Theme Toggle -->
+              <div class="theme-toggle-wrapper settings-row" style="margin-top: 3%;">
+                <span data-i18n="dark_mode">Dark Mode</span>
+                <label class="switch">
+                  <input type="checkbox" id="theme-toggle">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+<audio id="message-audio" src="/tone.mp3" preload="auto"></audio>
+
+      <ul class="messages" id="messages"></ul>
+      <div id="typing" class="typing hidden" data-i18n="typing">typing…</div>
+
+      <form id="send-form" class="send">
+        <button type="button" id="emoji-btn">😊</button>
+        <input id="message-input" placeholder="Type a message…" data-i18n="type_message" autocomplete="off" />
+        <input type="file" id="file-input" accept="image/*,audio/*" style="display:none;" />
+        <button type="button" id="file-btn">📎</button>
+        
+        <!-- Recording audio -->
+        <div id="audio-controls">
+          <i id="record-button" class="fas fa-microphone" title="Record Audio"></i>
+          <i id="stop-button" class="fas fa-stop" title="Stop Recording" style="display: none;"></i>
+          <audio id="audio-preview" controls hidden></audio>
+        </div>
+        <button type="submit" data-i18n="send">Send</button>
+
+        <div id="emoji-picker" class="emoji-picker hidden"></div>
+      </form>
+
+      <div id="image-preview" class="image-preview hidden">
+        <img id="preview-img" src="" alt="Image Preview" />
+        <button id="remove-preview" data-i18n="remove">✖</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.2/dist/index.min.js"></script>
+  <script src="js/chat.js"> </script>
+  <script src="js/lang.js"> </script>
+  <script src="js/sound.js"> </script>
+  <script src="js/notification.js"> </script>
+  <script src="js/profileUpdate.js"></script>
+  <script src="js/home.js"></script>
+</script>
+</body>
+</html>
