@@ -898,6 +898,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
             const msgs = await res.json();
             msgs.forEach(renderMsg);
             scrollBottom();
+            toggleSidebar(true);
 
             // Mark messages as read
             if (socket && socket.connected) {
