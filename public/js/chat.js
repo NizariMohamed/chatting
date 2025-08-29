@@ -10,6 +10,7 @@
     const meName = document.getElementById('me-name');
     const meEmail = document.getElementById('me-email');
     const meAvatar = document.getElementById('me-avatar');
+    const sideAvatar = document.getElementById('side-img')
     const peerAvatar = document.getElementById('peer-avatar');
     const profileUsername = document.getElementById('profile-username');
     const profileEmail = document.getElementById('profile-email');
@@ -625,13 +626,14 @@
             element.textContent = user.username.charAt(0).toUpperCase();
         }
     }
-
+    
     // Initialize user data
     meName.textContent = me.username || 'Me';
     meEmail.textContent = me.email || '';
     profileUsername.value = me.username || '';
     profileEmail.value = me.email || '';
     initializeUserAvatar(meAvatar, me);
+    
 
     // Theme management
     // ==============================
@@ -659,6 +661,7 @@ function initializeTheme() {
 
     // Apply theme
     document.body.classList.toggle('dark', isDark);
+    document.querySelector('.sidebar').classList.toggle('dark', isDark);
 
     // Sync toggle (if exists)
     if (themeToggle) themeToggle.checked = isDark;
@@ -676,6 +679,7 @@ initializeTheme();
 themeToggle?.addEventListener('change', (e) => {
     const isDark = e.target.checked;
     document.body.classList.toggle('dark', isDark);
+    document.querySelector('.sidebar').classList.toggle('dark', isDark); // Add this line
     saveTheme(isDark);
 });
 
@@ -1046,6 +1050,8 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
     function renderContacts() { 
         contactsEl.innerHTML = ''; 
         filteredContacts.forEach(u => contactsEl.appendChild(contactItem(u))); 
+        updateUnreadBadge();
+       
     }
 
     function escapeHtml(s) { 
